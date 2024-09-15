@@ -121,7 +121,7 @@ const CreateElectricGadgets = () => {
             <DatePicker
               style={{ width: "100%" }}
               format="YYYY-MM-DD"
-              onChange={(date, dateString) => field.onChange(dateString)}
+              onChange={(dateString) => field.onChange(dateString)}
             />
           )}
         />

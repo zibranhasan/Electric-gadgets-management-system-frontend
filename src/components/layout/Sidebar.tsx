@@ -54,8 +54,8 @@ const Sidebar = () => {
     case userRole.USER:
       sidebarItems = [
         {
-          key: "Products",
-          label: <NavLink to="/dashboard/user/products">All Products</NavLink>,
+          key: "Home",
+          label: <NavLink to="/dashboard/user/products">Home</NavLink>,
         },
         {
           key: "Checkout",
@@ -78,9 +78,7 @@ const Sidebar = () => {
           alignItems: "center",
           justifyContent: "center",
         }}
-      >
-        <h1>Electric Gadgets Shop</h1>
-      </div>
+      ></div>
       <Menu
         theme="dark"
         mode="inline"

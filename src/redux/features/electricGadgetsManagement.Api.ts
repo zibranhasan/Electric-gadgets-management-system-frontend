@@ -37,7 +37,7 @@ const gadgetsManagementApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-      providesTags: ["gadget"],
+      providesTags: ["gadget", "cart"],
     }),
     deleteGadgets: builder.mutation({
       query: (_id) => {

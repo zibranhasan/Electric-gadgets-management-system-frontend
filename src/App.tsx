@@ -25,7 +25,7 @@ const ElectricGadgetsManagement = () => {
       const decoded: DecodedToken = jwtDecode(token);
       setUserId(decoded.userId);
     } else {
-      setRedirectToLogin(true);
+      // setRedirectToLogin(true);
     }
   }, [token]);
 

@@ -22,8 +22,8 @@ const LoginPage: React.FC = () => {
   const [login] = useLoginMutation();
 
   const defaultValues = {
-    username: "zibran hasan",
-    password: "sourav",
+    username: "user",
+    password: "123456",
   };
 
   const onFinish = async (values: any) => {

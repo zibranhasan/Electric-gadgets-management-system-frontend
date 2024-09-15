@@ -37,6 +37,6 @@ export const { setUser, logout } = authSlice.actions;
 
 export default authSlice.reducer;
 
-export const userCurrentToken = (state: RootState) => state.auth.token; //state chaile
-//regular manner o korte pari, evabe subidar junno.
+export const userCurrentToken = (state: RootState) => state.auth.token;
+
 export const userCurrentUser = (state: RootState) => state.auth.user;

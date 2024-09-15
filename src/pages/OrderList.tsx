@@ -28,14 +28,14 @@ const OrderList = () => {
       (order: any) =>
         order.userId._id === userId &&
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        order.items.find((i: any) => i.gadgetsId._id === gadgetsId)
+        order.items.find((i: any) => i.gadgetsId?._id === gadgetsId)
     );
 
     if (!orderContainingGadgetsId) return;
 
     const itemContainingGadgetsId = orderContainingGadgetsId.items.find(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (item: any) => item.gadgetsId._id === gadgetsId
+      (item: any) => item.gadgetsId?._id === gadgetsId
     );
 
     if (!itemContainingGadgetsId || !itemContainingGadgetsId.gadgetsId) return;
@@ -84,14 +84,14 @@ const OrderList = () => {
       dataIndex: "userId",
       key: "userId",
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      render: (user: any) => user._id,
+      render: (user: any) => user?._id,
     },
     {
       title: "Username",
       dataIndex: "userId",
       key: "username",
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      render: (user: any) => user.username,
+      render: (user: any) => user?.username,
     },
     {
       title: "Items",
@@ -101,8 +101,9 @@ const OrderList = () => {
       render: (items: any, record: any) => (
         <ul>
           {items.map((item: OrderItem, itemIndex: number) => (
-            <li key={item.gadgetsId._id}>
-              {itemIndex + 1}. {item.gadgetsId.name} - Quantity: {item.quantity}
+            <li key={item.gadgetsId?._id || itemIndex}>
+              {itemIndex + 1}. {item.gadgetsId?.name || "N/A"} - Quantity:{" "}
+              {item.quantity}
               <div>
                 <Button
                   onClick={() =>
@@ -155,7 +156,8 @@ const OrderList = () => {
         );
         const totalPrice = order.items.reduce(
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (acc: any, item: any) => acc + item.quantity * item.gadgetsId.price,
+          (acc: any, item: any) =>
+            acc + item.quantity * (item.gadgetsId?.price || 0),
           0
         );
 

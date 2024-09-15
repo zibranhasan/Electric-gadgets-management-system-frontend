@@ -1,5 +1,3 @@
-import App from "@/App";
-import MainLayout from "@/components/layout/MainLayout";
 import ProtectedRoute from "@/components/layout/ProtectedRoute";
 import SecondaryLayout from "@/components/layout/SecondaryLayout";
 
@@ -10,19 +8,25 @@ import { createBrowserRouter } from "react-router-dom";
 
 import { managerPaths } from "./manager.routes";
 import { userPaths } from "./user.routes";
+import AllProducts from "@/pages/AllProducts";
+import NotFound from "@/pages/NotFound";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayout />,
+    element: <SecondaryLayout />,
     children: [
       {
         path: "",
-        element: <App />,
+        element: <AllProducts />,
       },
       {
         path: "register",
         element: <Register />,
+      },
+      {
+        path: "*",
+        element: <NotFound />,
       },
       {
         path: "login",
@@ -45,12 +49,16 @@ export const router = createBrowserRouter([
   {
     path: "dashboard/user",
     element: (
-      <>
-        <ProtectedRoute>
-          <SecondaryLayout />
-        </ProtectedRoute>
-      </>
+      <ProtectedRoute>
+        <SecondaryLayout />
+      </ProtectedRoute>
     ),
-    children: routesGenerator(userPaths),
+    children: [
+      {
+        index: true, // This makes /dashboard/user load AllProducts by default
+        element: <AllProducts />,
+      },
+      ...routesGenerator(userPaths),
+    ],
   },
 ]);
