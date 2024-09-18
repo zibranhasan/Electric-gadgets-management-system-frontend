@@ -10,29 +10,37 @@ import { userCurrentUser } from "@/redux/features/auth/authSlice";
 import { useEffect, useState } from "react";
 
 const GadgetDetails = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>(); // Specify the type for useParams
   const user = useAppSelector(userCurrentUser);
-  const userId = user?.userId;
+  const userId = user?.userId || null; // Handle potential null value
 
-  const { data: singleData } = useGetGadgetsByIdQuery(id);
+  const {
+    data: singleData,
+    isLoading: isGadgetLoading,
+    error: gadgetError,
+  } = useGetGadgetsByIdQuery(id);
   const gadgetDetails = singleData?.data;
 
-  const { data: cartData } = useGetOrdersByUserIdQuery(userId);
+  const { data: cartData, refetch: refetchCartData } =
+    useGetOrdersByUserIdQuery(userId, { skip: !userId });
   const [updateCart] = useUpdateCartMutation();
 
   const [isAddedToCart, setIsAddedToCart] = useState(false);
 
   useEffect(() => {
     if (cartData && id) {
-      // Check if the id exists in any of the cart items
-      const isItemInCart = cartData.some((cart) =>
-        cart.items?.some((item) => item.gadgetsId?._id === id)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const isItemInCart = cartData.some((cart: any) =>
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        cart.items?.some((item: any) => item.gadgetsId?._id === id)
       );
       setIsAddedToCart(isItemInCart);
     }
   }, [cartData, id]);
 
   const handleAddToCart = async (gadget_Id: string) => {
+    if (!userId) return; // Ensure userId is available
+
     try {
       await updateCart({
         userId,
@@ -41,23 +49,22 @@ const GadgetDetails = () => {
       }).unwrap();
       console.log("Cart updated successfully");
       // Refetch cart data to ensure the state is updated
-      await refetchCart();
+      await refetchCartData();
     } catch (error) {
       console.error("Failed to update cart", error);
     }
   };
 
-  const refetchCart = async () => {
-    // Ensure cart data is refetched after updating
-    const updatedCartData = await refetch();
-    const isItemInCart = updatedCartData.items?.some(
-      (item) => item?.gadgetsId?._id === gadgetDetails?._id
-    );
-    setIsAddedToCart(isItemInCart);
-  };
+  if (isGadgetLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (gadgetError) {
+    return <p>Error loading gadget details.</p>;
+  }
 
   if (!gadgetDetails) {
-    return <p>Loading...</p>;
+    return <p>No gadget details available.</p>;
   }
 
   return (
