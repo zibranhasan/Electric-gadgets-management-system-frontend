@@ -1,6 +1,6 @@
 # React + TypeScript + Vite
 ## Live link: https://assignment-6-gilt-nine.vercel.app/
-## Backend repo: 
+## Backend repo: https://github.com/zibranhasan/Electric-gadgets-management-system-backend
 # Project Name: Electric Gadget manageent system
 
 ## Technologies Used
