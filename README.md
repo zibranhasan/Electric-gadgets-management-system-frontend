@@ -17,7 +17,7 @@
 ### Role-Based Access Control
 
 #### User Role 
-**Email**: `user@example.com`  
+**Email**: `user@gmail.com`  
 **Password**: `123456`
 - Manage personal inventory and gadgets.
 - Sophisticated filtering options by price, release date, brand, model, category, OS, connectivity, power source, and features.
@@ -25,7 +25,7 @@
 - Dynamic checkout with total price computation, quantity updates, and buyer details.
 
 #### Manager Role 
-**Email**: `manager@example.com`  
+**Email**: `manager@gmail.com`  
 **Password**: `123456`
 - Comprehensive control over the entire inventory.
 - Bulk deletion of gadgets.
